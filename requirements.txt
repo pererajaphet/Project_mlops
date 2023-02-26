@@ -1,0 +1,6 @@
+flask
+pickle5
+pandas
+numpy
+nltk
+gensim

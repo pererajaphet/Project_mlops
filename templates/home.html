@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Anime Recommendation Form</title>
+	<style>
+		body {
+			background-color: #F5E6CA;
+		}
+
+		h1 {
+			color: #494949;
+			text-align: center;
+			margin-top: 50px;
+		}
+
+		form {
+			max-width: 500px;
+			margin: 0 auto;
+			background-color: #FFFFFF;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
+			margin-top: 30px;
+		}
+
+		label {
+			color: #494949;
+			font-weight: bold;
+			display: block;
+			margin-top: 20px;
+			margin-bottom: 5px;
+		}
+
+		input[type="text"], textarea {
+			padding: 10px;
+			border: 1px solid #C4C4C4;
+			border-radius: 5px;
+			width: 100%;
+			box-sizing: border-box;
+			font-size: 16px;
+			color: #494949;
+			margin-bottom: 20px;
+		}
+
+		input[type="submit"] {
+			background-color: #FF6B6B;
+			color: #FFFFFF;
+			font-size: 16px;
+			font-weight: bold;
+			padding: 10px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		input[type="submit"]:hover {
+			background-color: #FF2F2F;
+		}
+
+		img {
+			display: block;
+			margin: 0 auto;
+			margin-top: 50px;
+			max-width: 500px;
+		}
+	</style>
+</head>
+<body>
+	<img src="https://cdn.myanimelist.net/images/anime/5/87048.jpg" alt="Anime Image">
+    <h1>Anime Recommendation Form</h1>
+	<form method="POST" action="/predict">
+		<label for="title">Title:</label><br>
+		<input type="text" id="title" name="title" required><br>
+
+		<label for="genre">Genre:</label><br>
+		<input type="text" id="genre" name="genre" required><br>
+
+		<label for="description">Description:</label><br>
+		<textarea id="description" name="description" required></textarea><br>
+
+		<label for="type">Type:</label><br>
+		<input type="text" id="type" name="type" required><br>
+
+		<label for="producer">Producer:</label><br>
+		<input type="text" id="producer" name="producer" required><br>
+
+		<label for="studio">Studio:</label><br>
+		<input type="text" id="studio" name="studio" required><br>
+
+		<br>
+
+		<input type="submit" value="Submit">
+	</form>
+</body>
+</html>
