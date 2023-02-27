@@ -2,7 +2,7 @@ flask
 pickle5
 pandas
 numpy
-nltk
+#nltk
 gensim
 prometheus_flask_exporter
 uwsgi
