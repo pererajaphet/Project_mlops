@@ -1,21 +1,34 @@
-from flask import Flask, render_template, request
 import pandas as pd
 import numpy as np
 import pickle
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from gensim.models import Word2Vec
 import numpy as np
 import pandas as pd
-import re
-import nltk
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-from nltk.stem import WordNetLemmatizer
-from sklearn.feature_extraction.text import TfidfVectorizer
 from gensim.models import Word2Vec
-from sklearn.preprocessing import OneHotEncoder, LabelEncoder
+from sklearn.preprocessing import LabelEncoder
+from prometheus_flask_exporter import PrometheusMetrics
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
+from prometheus_client import make_wsgi_app,generate_latest
+import prometheus_client
+#from prometheus_client.core import CollectorRegistry
+#from prometheus_client import Summary, Counter, Histogram, Gauge
 
 app = Flask(__name__)
+
+metrics = PrometheusMetrics(app)
+metrics.info('app_info', 'Anime Flask App', version='1.0.3')
+# Define counters
+REQUESTS_COUNTER = metrics.counter('requests_total', 'Total number of requests',labels={'endpoint': lambda: request.endpoint, 'path': lambda: request.path, 'method':lambda:request.method})
+EXCEPTIONS_COUNTER = metrics.counter('exceptions_total', 'Total number of exceptions',labels={'endpoint': lambda: request.endpoint, 'path': lambda: request.path, 'method':lambda:request.method})
+# Define gauges
+ACTIVE_REQUESTS_GAUGE = metrics.gauge('active_requests', 'Number of active requests',labels={'endpoint': lambda: request.endpoint, 'path': lambda: request.path, 'method':lambda:request.method})
+MEMORY_USAGE_GAUGE = metrics.gauge('memory_usage', 'Memory usage of the application in bytes',labels={'endpoint': lambda: request.endpoint, 'path': lambda: request.path, 'method':lambda:request.method})
+# Define histograms
+REQUEST_DURATION_HISTOGRAM = metrics.histogram('request_duration_seconds', 'Duration of HTTP requests',labels={'endpoint': lambda: request.endpoint, 'path': lambda: request.path, 'method':lambda:request.method})
+# Define summaries
+REQUEST_SIZE_SUMMARY = metrics.summary('request_size_bytes', 'Size of HTTP requests',    labels={'endpoint': lambda: request.endpoint, 'path': lambda: request.path, 'method':lambda:request.method})
+
 # Load the trained machine learning model
 with open('modelRDF.pkl', 'rb') as f:
     model = pickle.load(f)
@@ -24,19 +37,25 @@ with open('modelRDF.pkl', 'rb') as f:
 def index():
     return render_template('home.html')
 
-@app.route('/')
-def home():
-    return render_template('home.html')
+@app.route("/metrics")
+def metrics():
+    return generate_latest()
+
+# Add prometheus wsgi middleware to route /metrics requests
+app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
+    '/metrics': make_wsgi_app()
+})
 
 @app.route('/predict', methods=['POST'])
 def predict():
     # Get the data from the form
-    title = request.form.get('title')
-    genre = request.form.get('genre')
-    synopsis = request.form.get('description')
-    anime_type = request.form.get('type')
-    producer = request.form.get('producer')
-    studio = request.form.get('studio')
+    data = request.get_json()
+    title = data.get('title')
+    genre = data.get('genre')
+    synopsis = data.get('synopsis')
+    anime_type = data.get('anime_type')
+    studio = data.get('studio')
+    producer = data.get('producer')
 
     # Preprocess the data
     data = pd.DataFrame({
@@ -48,10 +67,6 @@ def predict():
         'Studio': [studio]
     })
     data = data.applymap(lambda x: x.lower() if isinstance(x, str) else x)
-    data["Title"] = data["Title"].apply(lambda x: re.sub(r"[^a-zA-Z\s]", "", x))
-    data["Title"] = data["Title"].apply(lambda x: re.sub(r"\d+", "", x))
-    data["Synopsis"] = data["Synopsis"].apply(lambda x: re.sub(r"[^a-zA-Z\s]", "", x))
-    data["Synopsis"] = data["Synopsis"].apply(lambda x: re.sub(r"\d+", "", x))
     # Convert categorical columns to numerical using label encoding
     data["Synopsis"].fillna("", inplace=True)
     le = LabelEncoder()
@@ -86,8 +101,10 @@ def predict():
     # Prediction
     prediction = model.predict(X)
 
+    print(prediction.tolist())
+
     # Render the prediction result in the HTML template
-    return render_template('results.html', prediction=prediction)
+    return jsonify(prediction.tolist())
 
 
 if __name__ == '__main__':

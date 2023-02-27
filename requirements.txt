@@ -4,3 +4,6 @@ pandas
 numpy
 nltk
 gensim
+prometheus_flask_exporter
+uwsgi
+scikit-learn

@@ -1,0 +1,38 @@
+groups:
+  - name: app_alerts
+    rules:
+      - alert: MemoryUsageHigh
+        expr: sum(node_memory_MemAvailable_bytes) / sum(node_memory_MemTotal_bytes) * 100 < 10
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Memory usage is high (instance {{ $labels.instance }})"
+          description: "Memory usage on {{ $labels.instance }} is above 90%"
+
+      - alert: CPUUsageVeryHigh
+        expr: sum(rate(node_cpu_seconds_total{mode="idle"}[5m])) by (instance) < 10
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "CPU usage is very high (instance {{ $labels.instance }})"
+          description: "CPU usage on {{ $labels.instance }} is above 90%"
+
+      - alert: ApplicationException
+        expr: increase(my_app_exceptions_total[1m]) > 10
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Application exception rate is high (instance {{ $labels.instance }})"
+          description: "The rate of exceptions on {{ $labels.instance }} has increased"
+
+      - alert: SystemDown
+        expr: up{job="node"} == 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "System is down (instance {{ $labels.instance }})"
+          description: "The system has been down for more than 5 minutes"

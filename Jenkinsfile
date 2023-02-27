@@ -20,20 +20,20 @@ pipeline {
                 sh "python3 app.py"
                 }
         }
-        stage('Docker building Stage') {
+        stage('Docker Compose building Stage') {
             steps {
-                sh "docker build -t finalimage ."
+                sh "docker-compose up --build"
             }
         }
-        stage('Docker Run Stage') {
+        stage('Docker Compose Run Stage') {
             steps {
-                sh "docker run -p 5000:5000 -d finalimage"
+                sh "docker-compose up"
                 }
             }
-        stage('Docker Push Stage') {
+        stage('Docker Compose Push Stage') {
             steps{
                 sh "docker login --username=japhetperera --password=JaphetDockerhub"
-                sh "docker tag finalimage japhetperera/lab-jenkins"
+                //sh "docker tag finalmlops japhetperera/lab-jenkins"
                 sh "docker push japhetperera/lab-jenkins"
                 }
             }

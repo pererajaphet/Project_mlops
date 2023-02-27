@@ -1,0 +1,13 @@
+# Utilisez une image de base Python
+FROM python:3.9
+# Copiez votre modèle pkl dans le conteneur
+COPY modelRDF.pkl /app/modelRDF.pkl
+# Copiez le fichier requirements.txt dans le conteneur
+COPY requirements.txt /app/requirements.txt
+# Définissez le répertoire de travail
+WORKDIR /user/app/
+# Installez les dépendances nécessaires
+RUN pip install -r requirements.txt --user
+# Commande par défaut pour exécuter le modèle
+CMD ["python", "app.py"]
+
