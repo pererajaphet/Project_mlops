@@ -76,6 +76,8 @@ services:
  model:
   build: .
   container_name: model
+  ports:
+   - 5030:5030
   restart: unless-stopped
   networks:
    - monitoring
