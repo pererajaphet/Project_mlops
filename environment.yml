@@ -1,0 +1,14 @@
+name: myenv
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - flask
+  - pandas
+  - numpy
+  - nltk
+  - gensim
+  - prometheus-flask-exporter
+  - uwsgi
+  - pythran
+  - scikit-learn

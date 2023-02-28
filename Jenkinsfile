@@ -10,11 +10,21 @@ pipeline {
                 sh "git push origin staging"
                 }
             }
-        stage('Building Stage') {
+        stage('Create Conda environment') {
             steps {
-                sh "pip3 install -r requirements.txt --user"
-                }
+                sh 'conda env create --file environment.yml'
             }
+        }
+        stage('Activate Conda environment') {
+            steps {
+                sh 'conda activate myenv'
+            }
+        }
+        stage('Install dependencies') {
+            steps {
+                sh 'conda install --yes --file requirements.txt'
+            }
+        }
         stage('Testing Stage') {
             steps {
                 sh "python3 app.py"

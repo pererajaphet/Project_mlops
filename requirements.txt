@@ -1,9 +1,9 @@
 flask
-pickle5
 pandas
 numpy
 nltk
 gensim
 prometheus_flask_exporter
 uwsgi
+pythran
 scikit-learn

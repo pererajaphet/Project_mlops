@@ -3,8 +3,6 @@ import numpy as np
 import pickle
 from flask import Flask, render_template, request, jsonify
 from gensim.models import Word2Vec
-import numpy as np
-import pandas as pd
 from gensim.models import Word2Vec
 from sklearn.preprocessing import LabelEncoder
 from prometheus_flask_exporter import PrometheusMetrics
