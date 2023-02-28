@@ -31,7 +31,7 @@ pipeline {
             steps {
                 sh "python3 test_main.py"
                 }
-        }
+        }/*
         stage('Docker Compose building Stage') {
             steps {
                 sh "docker-compose up --build"
@@ -48,16 +48,15 @@ pipeline {
                 //sh "docker tag finalmlops japhetperera/lab-jenkins"
                 sh "docker push japhetperera/lab-jenkins"
                 }
-            }
+            }*/
         stage('Merge Stage') {
             steps{
                 sh "git checkout main"
-                sh "merge staging --allow-unrelated-histories
+                sh "merge staging --allow-unrelated-histories"
                 sh "git pull origin main"
                 sh "git push origin main"
                 sh "git branch -D staging"
-                }
+            }
         }
-        
     }
 } 
