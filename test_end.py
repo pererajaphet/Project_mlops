@@ -12,17 +12,18 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 class TestTestmlops():
   def setUp(self):
-    self.driver = webdriver.Edge() # initialize driver object
+    self.driver = webdriver.Firefox() # initialize driver object
     self.driver.implicitly_wait(10) # set a default wait time for elements to load
 
   def setup_method(self, method):
-    self.driver = webdriver.Edge()
+    self.driver = webdriver.Firefox()
     self.vars = {}
   
   
   def test_testmlops(self):
       self.driver.get("http://localhost:5000/")
       self.driver.set_window_size(1552, 832)
+      time.sleep(3)
       self.driver.find_element(By.ID, "title").click()
       self.driver.find_element(By.ID, "title").send_keys("naruto")
       self.driver.find_element(By.CSS_SELECTOR, ".home__form__question__buttons--left > .home__form__question__buttons--next").click()

@@ -29,7 +29,7 @@ pipeline {
         }
         stage('Testing Stage') {
             steps {
-                sh "python3 app.py"
+                sh "python3 test_main.py"
                 }
         }
         stage('Docker Compose building Stage') {
