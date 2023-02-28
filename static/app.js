@@ -641,7 +641,7 @@ async function submitData() {
         text = text.replace(']', '')
         console.log(text)
         console.log(typeof text)
-        number = (parseFloat(text) * 1).toFixed(2)
+        number = (parseFloat(text) * 1)
 
         const span = document.getElementById('result')
         span.textContent = number
