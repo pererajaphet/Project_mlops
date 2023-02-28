@@ -51,7 +51,7 @@ pipeline {
             }*/
         stage('Merge Stage') {
             steps{
-                sh "git checkout -b master"
+                sh "git checkout master"
                 sh "git merge staging --allow-unrelated-histories"
                 sh "git pull origin master"
                 sh "git push origin master"
