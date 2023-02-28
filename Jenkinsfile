@@ -51,11 +51,13 @@ pipeline {
             }*/
         stage('Merge Stage') {
             steps{
-                sh "git branch"
                 sh "git checkout main"
-                sh "git pull -f origin HEAD:main"
-                sh "git push -f origin staging:main"
+                sh "merge staging --allow-unrelated-histories
+                sh "git pull origin main"
+                sh "git push origin main"
+                sh "git branch -D staging"
                 }
         }
+        
     }
 } 
