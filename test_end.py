@@ -12,11 +12,11 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 class TestTestmlops():
   def setUp(self):
-    self.driver = webdriver.Firefox() # initialize driver object
+    self.driver = webdriver.Edge() # initialize driver object
     self.driver.implicitly_wait(10) # set a default wait time for elements to load
 
   def setup_method(self, method):
-    self.driver = webdriver.Firefox()
+    self.driver = webdriver.Edge()
     self.vars = {}
   
   
