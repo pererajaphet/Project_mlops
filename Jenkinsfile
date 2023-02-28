@@ -10,6 +10,7 @@ pipeline {
                 sh "git push origin staging"
                 }
             }
+        /*
         stage('Create Conda environment') {
             steps {
                 sh 'conda env create --file environment.yml'
@@ -20,9 +21,10 @@ pipeline {
                 sh 'conda activate mon_environnement'
             }
         }
+        */
         stage('Install dependencies') {
             steps {
-                sh 'conda install --yes --file requirements.txt'
+                sh 'pip3 install -r requirements.txt'
             }
         }
         stage('Testing Stage') {
