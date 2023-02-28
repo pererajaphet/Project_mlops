@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Staging branch') {
             steps {
-                sh "git branch -D staging"
+                //sh "git branch -D staging"
                 sh "git branch staging"
                 sh "git checkout staging"
                 sh "git pull origin dev"
