@@ -10,14 +10,16 @@ pipeline {
                 sh "git push origin staging"
                 }
             }
+        /*
         stage('Create Conda environment') {
             steps {
                 sh 'conda env create --file environment.yml'
             }
         }
+        */
         stage('Activate Conda environment') {
             steps {
-                sh 'conda activate myenv'
+                sh 'conda activate mon_environnement'
             }
         }
         stage('Install dependencies') {
