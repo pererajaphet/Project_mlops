@@ -54,8 +54,8 @@ pipeline {
             steps{
                 sh "git branch main"
                 sh "git checkout main"
-                sh "git pull -f origin HEAD:main"
-                sh "git push -f origin staging:main"
+                sh "git merge staging --allow-unrelated-histories"
+                sh  "git branch -D staging"
                 }
         }
     }
