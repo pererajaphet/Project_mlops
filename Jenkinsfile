@@ -52,7 +52,6 @@ pipeline {
             
         stage('Merge Stage') {
             steps{
-                sh "git branch main"
                 sh "git checkout main"
                 sh "git merge staging --allow-unrelated-histories"
                 sh  "git branch -D staging"
