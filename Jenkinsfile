@@ -12,7 +12,7 @@ pipeline {
             }
         stage('Create Conda environment') {
             steps {
-                sh 'conda create --name env'
+                sh 'conda env create --file environment.yml'
             }
         }
         stage('Activate Conda environment') {
