@@ -15,14 +15,6 @@ pipeline {
                 sh 'conda env create --file environment.yml'
             }
         }
-        stage('Create Conda Environment') { 
-            steps { 
-                sh 'conda create --name myenv python=3.10' 
-                sh 'conda activate myenv' 
-                sh 'conda install --file requirements.txt' 
-                } 
-        }
-        /*
         stage('Activate Conda environment') {
             steps {
                 sh 'conda activate myenv'
@@ -33,7 +25,6 @@ pipeline {
                 sh 'conda install --yes --file requirements.txt'
             }
         }
-        */
         stage('Testing Stage') {
             steps {
                 sh "python3 app.py"
