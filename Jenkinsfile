@@ -52,7 +52,7 @@ pipeline {
             
         stage('Merge Stage') {
             steps{
-                sh "git branch"
+                sh "git branch main"
                 sh "git checkout main"
                 sh "git pull -f origin HEAD:main"
                 sh "git push -f origin staging:main"
