@@ -7,3 +7,5 @@ prometheus_flask_exporter
 uwsgi
 pythran
 scikit-learn
+pytest
+selenium
