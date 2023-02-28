@@ -49,14 +49,14 @@ pipeline {
                 sh "docker push japhetperera/lab-jenkins"
                 }
             }*/
+            
         stage('Merge Stage') {
             steps{
-                sh "git checkout master"
-                sh "git merge staging --allow-unrelated-histories"
-                sh "git pull origin master"
-                sh "git push origin master"
-                sh "git branch -D staging"
-            }
+                sh "git branch"
+                sh "git checkout main"
+                sh "git pull -f origin HEAD:main"
+                sh "git push -f origin staging:main"
+                }
         }
     }
 } 
